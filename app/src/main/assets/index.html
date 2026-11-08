@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#0B3B4F">
+  <title>Pakan Ikan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ================= LAYAR MEMUAT ================= -->
+  <section id="layarMuat" class="layar tengah">
+    <div class="logo">🐟</div>
+    <p>Memuat aplikasi...</p>
+  </section>
+
+  <!-- ================= LAYAR GAGAL (tanpa internet) ================= -->
+  <section id="layarGagal" class="layar tengah tersembunyi">
+    <div class="logo">📶</div>
+    <h2>Tidak ada koneksi internet</h2>
+    <p class="redup">Aplikasi butuh internet untuk terhubung ke Firebase.</p>
+    <button class="tombol utama" onclick="location.reload()">Coba lagi</button>
+    <p class="redup kecil" style="margin-top:24px">Sedang mengatur WiFi alat lewat hotspot?</p>
+    <a class="tombol kecil" href="http://192.168.4.1/">Buka halaman setup alat</a>
+  </section>
+
+  <!-- ================= LAYAR LOGIN ================= -->
+  <section id="layarLogin" class="layar tengah tersembunyi">
+    <div class="logo">🐟</div>
+    <h1>Pakan Ikan Otomatis</h1>
+    <p class="redup">Masuk dengan akun yang diberikan admin</p>
+    <form id="formLogin" class="kartu form">
+      <label>Email
+        <input id="inEmail" type="email" autocomplete="username" required>
+      </label>
+      <label>Password
+        <input id="inPassword" type="password" autocomplete="current-password" required>
+      </label>
+      <label class="centang">
+        <input id="inIngat" type="checkbox" checked>
+        <span>Ingat saya di perangkat ini</span>
+      </label>
+      <button id="btnLogin" class="tombol utama" type="submit">Masuk</button>
+      <p id="pesanLogin" class="pesan-error"></p>
+    </form>
+  </section>
+
+  <!-- ================= LAYAR UTAMA ================= -->
+  <section id="layarUtama" class="layar tersembunyi">
+    <header class="kepala">
+      <div>
+        <h1>Pakan Ikan</h1>
+        <div id="badgeKoneksi" class="badge offline">● Alat offline</div>
+      </div>
+      <div class="kanan-kepala">
+        <div id="namaPengguna" class="kecil"></div>
+        <div id="peranPengguna" class="peran"></div>
+      </div>
+    </header>
+
+    <nav class="tab">
+      <button class="tab-btn aktif" data-tab="tabBeranda">Beranda</button>
+      <button class="tab-btn" data-tab="tabPengaturan">Pengaturan</button>
+    </nav>
+
+    <!-- ---------- TAB BERANDA ---------- -->
+    <main id="tabBeranda" class="isi-tab">
+      <div class="kartu baris">
+        <div id="cincinLevel" class="cincin" style="--persen:0">
+          <span id="teksLevel">--%</span>
+        </div>
+        <div class="info">
+          <div class="label">Sisa pakan</div>
+          <div id="teksJarak" class="nilai-kecil">Jarak sensor: -- cm</div>
+          <div class="label mt">Status</div>
+          <div id="teksStatus" class="nilai">-</div>
+          <div class="label mt">Terakhir diberi pakan</div>
+          <div id="teksTerakhir" class="nilai">-</div>
+        </div>
+      </div>
+
+      <button id="btnPakan" class="tombol besar">BERI PAKAN SEKARANG</button>
+      <p id="pesanPakan" class="pesan-info"></p>
+
+      <h2>Jadwal Otomatis</h2>
+      <div id="daftarJadwal"></div>
+
+      <h2>Laporan Berkala</h2>
+      <div class="kartu">
+        <div id="teksLaporan">Belum ada laporan.</div>
+        <div id="waktuLaporan" class="redup kecil"></div>
+      </div>
+
+      <h2>Riwayat Pemberian Pakan</h2>
+      <ul id="daftarRiwayat" class="kartu daftar">
+        <li class="redup">Belum ada riwayat.</li>
+      </ul>
+    </main>
+
+    <!-- ---------- TAB PENGATURAN ---------- -->
+    <main id="tabPengaturan" class="isi-tab tersembunyi">
+
+      <!-- WiFi alat (admin) -->
+      <div class="hanya-admin">
+        <h2>WiFi Alat (ESP32)</h2>
+        <div class="kartu">
+          <div class="baris-antara">
+            <div>
+              <div class="label">Tersambung ke</div>
+              <div id="teksWifi" class="nilai">-</div>
+            </div>
+            <div id="teksSinyal" class="sinyal">-</div>
+          </div>
+          <div id="teksWifiPesan" class="pesan-info kiri"></div>
+          <hr>
+          <form id="formWifi">
+            <label class="f">Nama WiFi baru (SSID)
+              <input id="inWifiSsid" type="text" required autocomplete="off">
+            </label>
+            <label class="f">Password WiFi
+              <input id="inWifiPass" type="password" autocomplete="new-password" placeholder="kosongkan jika tanpa password">
+            </label>
+            <label class="centang"><input id="inLihatPass" type="checkbox"><span>Tampilkan password</span></label>
+            <button class="tombol utama" type="submit">Kirim ke alat</button>
+          </form>
+          <p class="redup kecil">Alat harus sedang online. Alat mencoba WiFi baru selama 20 detik. Jika gagal, alat otomatis kembali ke WiFi lama. ESP32 hanya bisa WiFi 2,4 GHz.</p>
+        </div>
+
+        <details class="kartu">
+          <summary><b>Alat offline atau pindah tempat? Atur lewat hotspot</b></summary>
+          <ol class="langkah">
+            <li>Cabut daya ESP32. <b>Tahan tombol beri pakan</b>, colokkan daya, terus tahan 3 detik sampai LED berkedip cepat. (Jika alat tidak menemukan WiFi saat menyala, mode ini juga aktif sendiri.)</li>
+            <li>Di HP, buka pengaturan WiFi dan sambungkan ke <b>PakanIkan-Setup</b> dengan password <b>12345678</b>. Jika muncul "tidak ada internet", pilih tetap tersambung.</li>
+            <li>Halaman setup biasanya terbuka sendiri. Jika tidak, matikan data seluler lalu tekan tombol di bawah.</li>
+            <li>Pilih WiFi, isi password, tekan <b>Simpan dan sambungkan</b>. Sambungkan HP kembali ke internet.</li>
+          </ol>
+          <a class="tombol kecil utama" href="http://192.168.4.1/">Buka halaman setup alat (192.168.4.1)</a>
+        </details>
+      </div>
+
+      <!-- Pengguna (admin) -->
+      <div class="hanya-admin">
+        <h2>Pengguna</h2>
+        <div class="kartu">
+          <ul id="daftarPengguna" class="daftar polos"><li class="redup">Memuat...</li></ul>
+        </div>
+        <div class="kartu">
+          <b>Tambah pengguna baru</b>
+          <form id="formTambah">
+            <label class="f">Nama
+              <input id="inNamaBaru" type="text" required placeholder="misal: Bapak">
+            </label>
+            <label class="f">Email
+              <input id="inEmailBaru" type="email" required autocomplete="off">
+            </label>
+            <label class="f">Password (minimal 6 karakter)
+              <input id="inPassBaru" type="text" required minlength="6" autocomplete="off">
+            </label>
+            <button class="tombol utama" type="submit">Tambah pengguna</button>
+            <p id="pesanTambah" class="pesan-info kiri"></p>
+          </form>
+          <p class="redup kecil">Berikan email dan password ini ke orang tersebut untuk login di aplikasinya.</p>
+        </div>
+      </div>
+
+      <!-- Akun saya -->
+      <h2>Akun Saya</h2>
+      <div class="kartu">
+        <div class="label">Masuk sebagai</div>
+        <div id="teksEmailSaya" class="nilai">-</div>
+        <hr>
+        <b>Ganti password</b>
+        <form id="formPassword">
+          <label class="f">Password lama
+            <input id="inPassLama" type="password" required autocomplete="current-password">
+          </label>
+          <label class="f">Password baru (minimal 6 karakter)
+            <input id="inPassBaruSaya" type="password" required minlength="6" autocomplete="new-password">
+          </label>
+          <button class="tombol utama" type="submit">Simpan password baru</button>
+          <p id="pesanPassword" class="pesan-info kiri"></p>
+        </form>
+        <hr>
+        <button id="btnKeluar" class="tombol merah">Keluar dari akun</button>
+        <p class="redup kecil">Keluar juga membuat perangkat ini tidak lagi mengingat login.</p>
+      </div>
+    </main>
+  </section>
+
+  <template id="templateJadwal">
+    <div class="kartu jadwal">
+      <div class="baris-antara">
+        <strong class="judul-jadwal">Jadwal</strong>
+        <label class="saklar">
+          <input type="checkbox" class="jAktif">
+          <span></span>
+        </label>
+      </div>
+      <input type="time" class="jWaktu" value="07:00">
+      <div class="hari"></div>
+      <div class="baris-antara">
+        <span class="jPesan redup kecil"></span>
+        <button class="tombol kecil utama jSimpan">Simpan</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
