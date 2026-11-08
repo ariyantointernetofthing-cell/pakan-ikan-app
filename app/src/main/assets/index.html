@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#0B3B4F">
+  <title>Pakan Ikan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ================= LAYAR MEMUAT ================= -->
+  <section id="layarMuat" class="layar tengah">
+    <div class="logo">🐟</div>
+    <p>Memuat aplikasi...</p>
+  </section>
+
+  <!-- ================= LAYAR GAGAL (tanpa internet) ================= -->
+  <section id="layarGagal" class="layar tengah tersembunyi">
+    <div class="logo">📶</div>
+    <h2>Tidak ada koneksi internet</h2>
+    <p class="redup">Aplikasi butuh internet untuk terhubung ke Firebase.</p>
+    <button class="tombol utama" onclick="location.reload()">Coba lagi</button>
+  </section>
+
+  <!-- ================= LAYAR LOGIN ================= -->
+  <section id="layarLogin" class="layar tengah tersembunyi">
+    <div class="logo">🐟</div>
+    <h1>Pakan Ikan Otomatis</h1>
+    <p class="redup">Masuk dengan akun yang kamu buat di Firebase</p>
+    <form id="formLogin" class="kartu form">
+      <label>Email
+        <input id="inEmail" type="email" autocomplete="username" required>
+      </label>
+      <label>Password
+        <input id="inPassword" type="password" autocomplete="current-password" required>
+      </label>
+      <button id="btnLogin" class="tombol utama" type="submit">Masuk</button>
+      <p id="pesanLogin" class="pesan-error"></p>
+    </form>
+  </section>
+
+  <!-- ================= LAYAR UTAMA ================= -->
+  <section id="layarUtama" class="layar tersembunyi">
+    <header class="kepala">
+      <div>
+        <h1>Pakan Ikan</h1>
+        <div id="badgeKoneksi" class="badge offline">● Alat offline</div>
+      </div>
+      <button id="btnKeluar" class="tombol kecil">Keluar</button>
+    </header>
+
+    <main>
+      <!-- Level pakan -->
+      <div class="kartu baris">
+        <div id="cincinLevel" class="cincin" style="--persen:0">
+          <span id="teksLevel">--%</span>
+        </div>
+        <div class="info">
+          <div class="label">Sisa pakan</div>
+          <div id="teksJarak" class="nilai-kecil">Jarak sensor: -- cm</div>
+          <div class="label mt">Status</div>
+          <div id="teksStatus" class="nilai">-</div>
+          <div class="label mt">Terakhir diberi pakan</div>
+          <div id="teksTerakhir" class="nilai">-</div>
+        </div>
+      </div>
+
+      <!-- Tombol beri pakan -->
+      <button id="btnPakan" class="tombol besar">BERI PAKAN SEKARANG</button>
+      <p id="pesanPakan" class="pesan-info"></p>
+
+      <!-- Jadwal -->
+      <h2>Jadwal Otomatis</h2>
+      <div id="daftarJadwal"></div>
+
+      <!-- Laporan -->
+      <h2>Laporan Berkala</h2>
+      <div class="kartu">
+        <div id="teksLaporan">Belum ada laporan.</div>
+        <div id="waktuLaporan" class="redup kecil"></div>
+      </div>
+
+      <!-- Riwayat -->
+      <h2>Riwayat Pemberian Pakan</h2>
+      <ul id="daftarRiwayat" class="kartu daftar">
+        <li class="redup">Belum ada riwayat.</li>
+      </ul>
+
+      <p class="redup kecil tengah-teks">Data diperbarui otomatis tiap 5 detik oleh alat.</p>
+    </main>
+  </section>
+
+  <!-- Template kartu jadwal -->
+  <template id="templateJadwal">
+    <div class="kartu jadwal">
+      <div class="baris-antara">
+        <strong class="judul-jadwal">Jadwal</strong>
+        <label class="saklar">
+          <input type="checkbox" class="jAktif">
+          <span></span>
+        </label>
+      </div>
+      <input type="time" class="jWaktu" value="07:00">
+      <div class="hari"></div>
+      <div class="baris-antara">
+        <span class="jPesan redup kecil"></span>
+        <button class="tombol kecil utama jSimpan">Simpan</button>
+      </div>
+    </div>
+  </template>
+
+  <!-- Firebase SDK (versi compat, dimuat dari internet) -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
