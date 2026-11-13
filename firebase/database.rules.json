@@ -1,0 +1,35 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "pakanIkan": {
+      ".read": "auth != null && (auth.token.email == 'esp32@pakanikan.id' || auth.token.email == 'GANTI_EMAIL_ADMIN@gmail.com' || root.child('pengguna').child(auth.uid).exists())",
+      ".write": "auth != null && (auth.token.email == 'esp32@pakanikan.id' || auth.token.email == 'GANTI_EMAIL_ADMIN@gmail.com' || root.child('pengguna').child(auth.uid).exists())",
+      "riwayat": {
+        ".indexOn": [
+          "waktu"
+        ]
+      },
+      "riwayatLevel": {
+        ".indexOn": [
+          "waktu"
+        ]
+      }
+    },
+    "pengguna": {
+      ".read": "auth != null && (auth.token.email == 'GANTI_EMAIL_ADMIN@gmail.com' || root.child('pengguna').child(auth.uid).exists())",
+      "$uid": {
+        ".write": "auth != null && auth.token.email == 'GANTI_EMAIL_ADMIN@gmail.com'",
+        ".validate": "!newData.exists() || newData.hasChildren(['nama', 'email'])"
+      }
+    },
+    "wifiAlat": {
+      ".read": "auth != null && (auth.token.email == 'esp32@pakanikan.id' || auth.token.email == 'GANTI_EMAIL_ADMIN@gmail.com')",
+      ".write": "auth != null && (auth.token.email == 'esp32@pakanikan.id' || auth.token.email == 'GANTI_EMAIL_ADMIN@gmail.com')"
+    },
+    "otaFirmware": {
+      ".read": "auth != null && (auth.token.email == 'esp32@pakanikan.id' || auth.token.email == 'GANTI_EMAIL_ADMIN@gmail.com')",
+      ".write": "auth != null && auth.token.email == 'GANTI_EMAIL_ADMIN@gmail.com'"
+    }
+  }
+}

@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1420 980" width="1420" height="980" font-family="Segoe UI,Roboto,Arial,sans-serif">
+<style>.j{fill:#fff;font-size:14px;font-weight:700;text-anchor:middle}.s{fill:#557;font-size:11.5px;text-anchor:middle}
+.p{fill:#222;font-size:12.5px;font-weight:600}.t{fill:#fff;font-size:12px;font-weight:700;text-anchor:middle}
+.r{fill:#7a5b1e;font-size:12px;font-weight:700}.c{fill:#333;font-size:13px}.h{fill:#0b3b4f;font-size:15px;font-weight:700}
+.k{fill:#666;font-size:11.5px}</style>
+<rect width="1420" height="980" fill="#f6fafb"/>
+<text x="30" y="40" style="font-size:24px;font-weight:800;fill:#0b3b4f">Rangkaian Pakan Ikan Otomatis (ESP32)</text>
+<text x="30" y="64" class="c">Adaptor 12V → step-down 5V → ESP32 + servo + sensor. Label 5V / simbol GND = disambung ke rel yang sama.</text>
+<rect x="30" y="110" width="160" height="110" rx="10" fill="#fff" stroke="#8e1b1b" stroke-width="2.5"/>
+<rect x="30" y="110" width="160" height="26" rx="10" fill="#8e1b1b"/><rect x="30" y="124" width="160" height="12" fill="#8e1b1b"/>
+<text x="110.0" y="128" class="j">ADAPTOR 12V</text>
+<text x="110.0" y="212" class="s">min. 2A</text>
+<circle cx="190" cy="145" r="4.5" fill="#222"/>
+<text x="181" y="149" class="p" text-anchor="end">+12V</text>
+<circle cx="190" cy="190" r="4.5" fill="#222"/>
+<text x="181" y="194" class="p" text-anchor="end">– (GND)</text>
+<rect x="270" y="110" width="170" height="110" rx="10" fill="#fff" stroke="#b35400" stroke-width="2.5"/>
+<rect x="270" y="110" width="170" height="26" rx="10" fill="#b35400"/><rect x="270" y="124" width="170" height="12" fill="#b35400"/>
+<text x="355.0" y="128" class="j">STEP-DOWN LM2596</text>
+<text x="355.0" y="212" class="s">setel OUT = 5,0V dulu!</text>
+<circle cx="270" cy="145" r="4.5" fill="#222"/>
+<text x="279" y="149" class="p">IN+</text>
+<circle cx="270" cy="190" r="4.5" fill="#222"/>
+<text x="279" y="194" class="p">IN–</text>
+<circle cx="440" cy="145" r="4.5" fill="#222"/>
+<text x="431" y="149" class="p" text-anchor="end">OUT+</text>
+<circle cx="440" cy="190" r="4.5" fill="#222"/>
+<text x="431" y="194" class="p" text-anchor="end">OUT–</text>
+<path d="M190,145 L270,145" fill="none" stroke="#c0392b" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M190,190 L270,190" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M225,145 L225,96" fill="none" stroke="#c0392b" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="225" cy="145" r="5" fill="#c0392b"/>
+<rect x="198" y="77" width="54" height="22" rx="11" fill="#8e1b1b"/><text x="225" y="92.5" class="t">+12V</text>
+<text x="258" y="92" class="k">→ ke COM relay</text>
+<rect x="540" y="110" width="200" height="840" rx="10" fill="#fff" stroke="#0b3b4f" stroke-width="2.5"/>
+<rect x="540" y="110" width="200" height="26" rx="10" fill="#0b3b4f"/><rect x="540" y="124" width="200" height="12" fill="#0b3b4f"/>
+<text x="640.0" y="128" class="j">ESP32 DevKit V1</text>
+<text x="640.0" y="942" class="s">38 pin / 30 pin</text>
+<circle cx="540" cy="240" r="4.5" fill="#222"/>
+<text x="549" y="244" class="p">VIN</text>
+<circle cx="540" cy="300" r="4.5" fill="#222"/>
+<text x="549" y="304" class="p">GND</text>
+<circle cx="540" cy="360" r="4.5" fill="#222"/>
+<text x="549" y="364" class="p">3V3 (tidak dipakai)</text>
+<path d="M440,145 L490,145 L490,240 L540,240" fill="none" stroke="#d63031" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M440,190 L470,190 L470,300 L540,300" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="490" cy="200" r="5" fill="#d63031"/>
+<path d="M490,200 L505,200" fill="none" stroke="#d63031" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="505" y="189" width="40" height="22" rx="11" fill="#d63031"/><text x="525" y="204.5" class="t">5V</text>
+<circle cx="470" cy="270" r="5" fill="#111"/>
+<path d="M470,270 L500,270" fill="none" stroke="#111" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M500,270 v8 M488,278 h24 M492,283 h16 M496,288 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<circle cx="740" cy="215" r="4.5" fill="#222"/>
+<text x="731" y="219" class="p" text-anchor="end">GPIO19</text>
+<circle cx="740" cy="315" r="4.5" fill="#222"/>
+<text x="731" y="319" class="p" text-anchor="end">GPIO4</text>
+<circle cx="740" cy="410" r="4.5" fill="#222"/>
+<text x="731" y="414" class="p" text-anchor="end">GPIO5</text>
+<circle cx="740" cy="460" r="4.5" fill="#222"/>
+<text x="731" y="464" class="p" text-anchor="end">GPIO18</text>
+<circle cx="740" cy="565" r="4.5" fill="#222"/>
+<text x="731" y="569" class="p" text-anchor="end">GPIO25</text>
+<circle cx="740" cy="725" r="4.5" fill="#222"/>
+<text x="731" y="729" class="p" text-anchor="end">GPIO26</text>
+<circle cx="740" cy="820" r="4.5" fill="#222"/>
+<text x="731" y="824" class="p" text-anchor="end">GPIO27</text>
+<circle cx="740" cy="905" r="4.5" fill="#222"/>
+<text x="731" y="909" class="p" text-anchor="end">GPIO23</text>
+<rect x="900" y="170" width="200" height="90" rx="10" fill="#fff" stroke="#1d6f86" stroke-width="2.5"/>
+<rect x="900" y="170" width="200" height="26" rx="10" fill="#1d6f86"/><rect x="900" y="184" width="200" height="12" fill="#1d6f86"/>
+<text x="1000.0" y="188" class="j">SERVO KATUP</text>
+<text x="1000.0" y="252" class="s">SG90 / MG90S</text>
+<circle cx="900" cy="215" r="4.5" fill="#222"/>
+<text x="909" y="219" class="p">Oranye (sinyal)</text>
+<circle cx="1100" cy="210" r="4.5" fill="#222"/>
+<text x="1091" y="214" class="p" text-anchor="end">Merah</text>
+<circle cx="1100" cy="238" r="4.5" fill="#222"/>
+<text x="1091" y="242" class="p" text-anchor="end">Coklat</text>
+<path d="M740,215 L900,215" fill="none" stroke="#f39c12" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1100,210 L1120,210" fill="none" stroke="#d63031" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="1120" y="199" width="40" height="22" rx="11" fill="#d63031"/><text x="1140" y="214.5" class="t">5V</text>
+<path d="M1100,238 L1126,238 L1126,240" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1126,240 v8 M1114,248 h24 M1118,253 h16 M1122,258 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<rect x="900" y="270" width="200" height="90" rx="10" fill="#fff" stroke="#1d6f86" stroke-width="2.5"/>
+<rect x="900" y="270" width="200" height="26" rx="10" fill="#1d6f86"/><rect x="900" y="284" width="200" height="12" fill="#1d6f86"/>
+<text x="1000.0" y="288" class="j">SERVO PENGARAH</text>
+<text x="1000.0" y="352" class="s">SG90 / MG90S</text>
+<circle cx="900" cy="315" r="4.5" fill="#222"/>
+<text x="909" y="319" class="p">Oranye (sinyal)</text>
+<circle cx="1100" cy="310" r="4.5" fill="#222"/>
+<text x="1091" y="314" class="p" text-anchor="end">Merah</text>
+<circle cx="1100" cy="338" r="4.5" fill="#222"/>
+<text x="1091" y="342" class="p" text-anchor="end">Coklat</text>
+<path d="M740,315 L900,315" fill="none" stroke="#e67e22" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1100,310 L1120,310" fill="none" stroke="#d63031" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="1120" y="299" width="40" height="22" rx="11" fill="#d63031"/><text x="1140" y="314.5" class="t">5V</text>
+<path d="M1100,338 L1126,338 L1126,340" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1126,340 v8 M1114,348 h24 M1118,353 h16 M1122,358 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<rect x="900" y="370" width="200" height="130" rx="10" fill="#fff" stroke="#6c3483" stroke-width="2.5"/>
+<rect x="900" y="370" width="200" height="26" rx="10" fill="#6c3483"/><rect x="900" y="384" width="200" height="12" fill="#6c3483"/>
+<text x="1000.0" y="388" class="j">HC-SR04</text>
+<text x="1000.0" y="492" class="s">sensor sisa pakan</text>
+<circle cx="900" cy="410" r="4.5" fill="#222"/>
+<text x="909" y="414" class="p">TRIG</text>
+<circle cx="900" cy="460" r="4.5" fill="#222"/>
+<text x="909" y="464" class="p">ECHO</text>
+<circle cx="1100" cy="410" r="4.5" fill="#222"/>
+<text x="1091" y="414" class="p" text-anchor="end">VCC</text>
+<circle cx="1100" cy="465" r="4.5" fill="#222"/>
+<text x="1091" y="469" class="p" text-anchor="end">GND</text>
+<path d="M740,410 L900,410" fill="none" stroke="#8e44ad" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1100,410 L1120,410" fill="none" stroke="#d63031" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="1120" y="399" width="40" height="22" rx="11" fill="#d63031"/><text x="1140" y="414.5" class="t">5V</text>
+<path d="M1100,465 L1126,465 L1126,467" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1126,467 v8 M1114,475 h24 M1118,480 h16 M1122,485 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<path d="M900,460 L870,460" fill="none" stroke="#9b59b6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="870" y1="460" x2="815" y2="460" stroke="#555" stroke-width="2"/>
+<rect x="822.5" y="452" width="40" height="16" rx="3" fill="#e8d3a6" stroke="#7a5b1e" stroke-width="2"/>
+<text x="822" y="447" class="r">1kΩ</text>
+<path d="M815,460 L740,460" fill="none" stroke="#9b59b6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="790" cy="460" r="5" fill="#9b59b6"/>
+<line x1="790" y1="465" x2="790" y2="515" stroke="#555" stroke-width="2"/>
+<rect x="782" y="472.0" width="16" height="36" rx="3" fill="#e8d3a6" stroke="#7a5b1e" stroke-width="2"/>
+<text x="802" y="496" class="r">2kΩ</text>
+<path d="M790,515 v8 M778,523 h24 M782,528 h16 M786,533 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<rect x="900" y="525" width="200" height="95" rx="10" fill="#fff" stroke="#1e8449" stroke-width="2.5"/>
+<rect x="900" y="525" width="200" height="26" rx="10" fill="#1e8449"/><rect x="900" y="539" width="200" height="12" fill="#1e8449"/>
+<text x="1000.0" y="543" class="j">MODUL RELAY 5V</text>
+<circle cx="900" cy="565" r="4.5" fill="#222"/>
+<text x="909" y="569" class="p">IN</text>
+<circle cx="1100" cy="560" r="4.5" fill="#222"/>
+<text x="1091" y="564" class="p" text-anchor="end">VCC</text>
+<circle cx="1100" cy="592" r="4.5" fill="#222"/>
+<text x="1091" y="596" class="p" text-anchor="end">GND</text>
+<text x="970" y="598" class="s">aktif HIGH/LOW</text>
+<path d="M740,565 L900,565" fill="none" stroke="#27ae60" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1100,560 L1120,560" fill="none" stroke="#d63031" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="1120" y="549" width="40" height="22" rx="11" fill="#d63031"/><text x="1140" y="564.5" class="t">5V</text>
+<path d="M1100,592 L1126,592 L1126,594" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1126,594 v8 M1114,602 h24 M1118,607 h16 M1122,612 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<circle cx="1000" cy="620" r="4.5" fill="#222"/>
+<text x="991" y="624" class="p" text-anchor="end"></text>
+<circle cx="1070" cy="620" r="4.5" fill="#222"/>
+<text x="1061" y="624" class="p" text-anchor="end"></text>
+<text x="1000" y="610" class="p" text-anchor="middle">COM</text><text x="1070" y="610" class="p" text-anchor="middle">NO</text>
+<path d="M1000,620 L1000,650 L925,650" fill="none" stroke="#8e1b1b" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="871" y="639" width="54" height="22" rx="11" fill="#8e1b1b"/><text x="898" y="654.5" class="t">+12V</text>
+<path d="M1070,620 L1070,650 L1210,650" fill="none" stroke="#c0392b" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="1210" y="620" width="150" height="95" rx="10" fill="#fff" stroke="#8e1b1b" stroke-width="2.5"/>
+<rect x="1210" y="620" width="150" height="26" rx="10" fill="#8e1b1b"/><rect x="1210" y="634" width="150" height="12" fill="#8e1b1b"/>
+<text x="1285.0" y="638" class="j">BLOWER 12V</text>
+<circle cx="1210" cy="650" r="4.5" fill="#222"/>
+<text x="1219" y="654" class="p">+</text>
+<circle cx="1360" cy="690" r="4.5" fill="#222"/>
+<text x="1351" y="694" class="p" text-anchor="end">–</text>
+<path d="M1360,690 L1378,690 L1378,694" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1378,694 v8 M1366,702 h24 M1370,707 h16 M1374,712 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<circle cx="1180" cy="650" r="5" fill="#c0392b"/>
+<path d="M1180,650 L1180,575 L1250,575" fill="none" stroke="#555" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1296,575 L1390,575 L1390,690 L1378,690" fill="none" stroke="#555" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1250,563 L1250,587 L1274,575 Z" fill="#333" transform="rotate(180 1262 575)"/><line x1="1250" y1="562" x2="1250" y2="588" stroke="#333" stroke-width="3"/>
+<text x="1270" y="553" class="r" text-anchor="middle">Dioda 1N4007</text><text x="1290" y="605" class="k" text-anchor="middle">garis putih → sisi +</text>
+<rect x="900" y="685" width="200" height="75" rx="10" fill="#fff" stroke="#b7950b" stroke-width="2.5"/>
+<rect x="900" y="685" width="200" height="26" rx="10" fill="#b7950b"/><rect x="900" y="699" width="200" height="12" fill="#b7950b"/>
+<text x="1000.0" y="703" class="j">LED STATUS</text>
+<circle cx="900" cy="725" r="4.5" fill="#222"/>
+<text x="909" y="729" class="p">Kaki panjang (+)</text>
+<circle cx="1100" cy="740" r="4.5" fill="#222"/>
+<text x="1091" y="744" class="p" text-anchor="end">Kaki pendek</text>
+<path d="M740,725 L780,725" fill="none" stroke="#f1c40f" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="780" y1="725" x2="850" y2="725" stroke="#555" stroke-width="2"/>
+<rect x="795.0" y="717" width="40" height="16" rx="3" fill="#e8d3a6" stroke="#7a5b1e" stroke-width="2"/>
+<text x="797" y="712" class="r">220Ω</text>
+<path d="M850,725 L900,725" fill="none" stroke="#f1c40f" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1100,740 L1126,740 L1126,742" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1126,742 v8 M1114,750 h24 M1118,755 h16 M1122,760 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<rect x="900" y="780" width="200" height="70" rx="10" fill="#fff" stroke="#7b7d7d" stroke-width="2.5"/>
+<rect x="900" y="780" width="200" height="26" rx="10" fill="#7b7d7d"/><rect x="900" y="794" width="200" height="12" fill="#7b7d7d"/>
+<text x="1000.0" y="798" class="j">BUZZER AKTIF</text>
+<circle cx="900" cy="820" r="4.5" fill="#222"/>
+<text x="909" y="824" class="p">+</text>
+<circle cx="1100" cy="830" r="4.5" fill="#222"/>
+<text x="1091" y="834" class="p" text-anchor="end">–</text>
+<path d="M740,820 L900,820" fill="none" stroke="#95a5a6" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1100,830 L1126,830 L1126,832" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1126,832 v8 M1114,840 h24 M1118,845 h16 M1122,850 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<rect x="900" y="870" width="200" height="75" rx="10" fill="#fff" stroke="#34495e" stroke-width="2.5"/>
+<rect x="900" y="870" width="200" height="26" rx="10" fill="#34495e"/><rect x="900" y="884" width="200" height="12" fill="#34495e"/>
+<text x="1000.0" y="888" class="j">TOMBOL</text>
+<text x="1000.0" y="937" class="s">push button</text>
+<circle cx="900" cy="905" r="4.5" fill="#222"/>
+<text x="909" y="909" class="p">kaki 1</text>
+<circle cx="1100" cy="915" r="4.5" fill="#222"/>
+<text x="1091" y="919" class="p" text-anchor="end">kaki 2</text>
+<path d="M740,905 L900,905" fill="none" stroke="#5d6d7e" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1100,915 L1126,915 L1126,917" fill="none" stroke="#111" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M1126,917 v8 M1114,925 h24 M1118,930 h16 M1122,935 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<rect x="30" y="265" width="420" height="95" rx="10" fill="#fff" stroke="#2e4053" stroke-width="2.5"/>
+<rect x="30" y="265" width="420" height="26" rx="10" fill="#2e4053"/><rect x="30" y="279" width="420" height="12" fill="#2e4053"/>
+<text x="240.0" y="283" class="j">KAPASITOR ELCO 470–1000µF / 16V</text>
+<text x="240.0" y="352" class="s">pasang dekat servo, kaki – (garis) ke GND</text>
+<text x="70" y="318" class="p">Kaki +</text>
+<path d="M120,314 L150,314" fill="none" stroke="#d63031" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="150" y="303" width="40" height="22" rx="11" fill="#d63031"/><text x="170" y="318.5" class="t">5V</text>
+<text x="260" y="318" class="p">Kaki –</text>
+<path d="M310,314 L340,314 L340,316" fill="none" stroke="#111" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M340,316 v8 M328,324 h24 M332,329 h16 M336,334 h8" stroke="#111" stroke-width="2.6" fill="none"/>
+<rect x="30" y="390" width="470" height="560" rx="12" fill="#fff" stroke="#c9dde3" stroke-width="2"/>
+<text x="50" y="420" class="h">Catatan penting</text>
+<text x="50" y="444" class="c">1. Setel step-down ke 5,0V pakai multimeter SEBELUM</text>
+<text x="50" y="468" class="c">    menyambung ESP32 dan servo.</text>
+<text x="50" y="492" class="c">2. Semua GND jadi satu: adaptor, step-down, ESP32,</text>
+<text x="50" y="516" class="c">    servo, sensor, relay, blower.</text>
+<text x="50" y="540" class="c">3. Servo ambil 5V dari step-down, BUKAN dari pin 3V3</text>
+<text x="50" y="564" class="c">    atau 5V ESP32.</text>
+<text x="50" y="588" class="c">4. ECHO HC-SR04 keluar 5V → turunkan pakai pembagi</text>
+<text x="50" y="612" class="c">    tegangan 1kΩ + 2kΩ supaya aman untuk ESP32 (3,3V).</text>
+<text x="50" y="636" class="c">5. Jenis relay (aktif HIGH/LOW) dipilih di aplikasi.</text>
+<text x="50" y="660" class="c">6. Blower lewat COM–NO relay, +12V dari adaptor.</text>
+<text x="50" y="684" class="c">7. Tombol pakai pull-up internal: cukup GPIO23 ↔ GND.</text>
+<text x="50" y="708" class="c">8. Tahan tombol 3 detik saat menyalakan alat → mode</text>
+<text x="50" y="732" class="c">    hotspot "PakanIkan-Setup" untuk atur WiFi.</text>
+<text x="50" y="766" class="h">Warna kabel di gambar</text>
+<text x="50" y="790" class="c">Merah = 5V   ·   Merah tua = 12V   ·   Hitam = GND</text>
+<text x="50" y="814" class="c">Oranye = sinyal servo   ·   Ungu = sensor jarak</text>
+<text x="50" y="838" class="c">Hijau = relay   ·   Kuning = LED   ·   Abu = buzzer/tombol</text>
+</svg>

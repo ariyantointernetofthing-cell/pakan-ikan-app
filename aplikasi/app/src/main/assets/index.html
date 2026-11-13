@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#0B3B4F">
+  <title>Pakan Ikan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <section id="layarMuat" class="layar tengah">
+    <div class="logo">🐟</div>
+    <p>Memuat aplikasi...</p>
+  </section>
+
+  <section id="layarGagal" class="layar tengah tersembunyi">
+    <div class="logo">📶</div>
+    <h2>Tidak ada koneksi internet</h2>
+    <p class="redup">Aplikasi butuh internet untuk terhubung ke Firebase.</p>
+    <button class="tombol utama" onclick="location.reload()">Coba lagi</button>
+    <p class="redup kecil" style="margin-top:24px">Sedang mengatur WiFi alat lewat hotspot?</p>
+    <a class="tombol kecil" href="http://192.168.4.1/">Buka halaman setup alat</a>
+  </section>
+
+  <section id="layarLogin" class="layar tengah tersembunyi">
+    <div class="logo">🐟</div>
+    <h1>Pakan Ikan Otomatis</h1>
+    <p class="redup">Masuk dengan akun yang diberikan admin</p>
+    <form id="formLogin" class="kartu form">
+      <label>Email
+        <input id="inEmail" type="email" autocomplete="username" required>
+      </label>
+      <label>Password
+        <input id="inPassword" type="password" autocomplete="current-password" required>
+      </label>
+      <label class="centang">
+        <input id="inIngat" type="checkbox" checked>
+        <span>Ingat saya di perangkat ini</span>
+      </label>
+      <button id="btnLogin" class="tombol utama" type="submit">Masuk</button>
+      <p id="pesanLogin" class="pesan-error"></p>
+    </form>
+  </section>
+
+  <section id="layarUtama" class="layar tersembunyi">
+    <header class="kepala">
+      <div class="kepala-atas">
+        <div>
+          <h1>🐟 Pakan Ikan</h1>
+          <div class="baris-badge">
+            <span id="badgeKoneksi" class="badge offline">● Alat offline</span>
+            <span id="badgeSinyal" class="badge sinyal-badge" title="Kekuatan sinyal WiFi alat">
+              <span class="bar-sinyal"><i></i><i></i><i></i><i></i></span><span id="teksSinyalKepala">-</span>
+            </span>
+          </div>
+        </div>
+        <div class="kanan-kepala">
+          <div id="namaPengguna" class="kecil"></div>
+          <div id="peranPengguna" class="peran"></div>
+        </div>
+      </div>
+      <div class="jam-besar">
+        <span id="jamSekarang">--:--</span><span id="detikSekarang">:--</span><span id="zonaWaktu"></span>
+      </div>
+      <div id="tanggalSekarang">-</div>
+    </header>
+
+    <nav class="tab">
+      <button class="tab-btn aktif" data-tab="tabBeranda">Beranda</button>
+      <button class="tab-btn" data-tab="tabRiwayat">Riwayat</button>
+      <button class="tab-btn" data-tab="tabPengaturan">Pengaturan</button>
+    </nav>
+
+    <!-- ===================== BERANDA ===================== -->
+    <main id="tabBeranda" class="isi-tab">
+      <div id="akuarium" class="kartu akuarium" aria-label="Akuarium">
+        <svg class="dasar" viewBox="0 0 360 170" preserveAspectRatio="none" aria-hidden="true">
+          <rect y="0" width="360" height="14" fill="#5FE0E0" opacity=".16"/>
+          <polygon points="60,0 95,0 150,170 90,170" fill="#fff" opacity=".06"/>
+          <polygon points="200,0 225,0 290,170 245,170" fill="#fff" opacity=".04"/>
+          <path d="M0,150 C60,138 120,158 180,148 C240,138 300,156 360,146 L360,170 L0,170 Z" fill="#C9A86A" opacity=".45"/>
+          <path d="M26,160 C18,130 34,118 26,92 C40,116 30,132 38,160 Z" fill="#2BBF7A" opacity=".85"/>
+          <path d="M44,162 C40,140 52,128 46,110 C58,128 52,142 54,162 Z" fill="#1F9D61"/>
+          <path d="M322,162 C314,128 332,114 324,84 C340,112 330,134 336,162 Z" fill="#2BBF7A" opacity=".85"/>
+        </svg>
+        <i class="gelembung" style="left:9%"></i>
+        <i class="gelembung" style="left:11%;animation-delay:-2.2s"></i>
+        <i class="gelembung" style="left:90%;animation-delay:-3.6s"></i>
+        <div class="pelet-wadah">
+          <i class="pelet" style="left:30%"></i>
+          <i class="pelet" style="left:38%;animation-delay:-.5s"></i>
+          <i class="pelet" style="left:46%;animation-delay:-1.1s"></i>
+          <i class="pelet" style="left:54%;animation-delay:-.3s"></i>
+          <i class="pelet" style="left:62%;animation-delay:-.8s"></i>
+          <i class="pelet" style="left:70%;animation-delay:-1.4s"></i>
+        </div>
+          <div class="ikan ikan1"><svg viewBox="-34 -14 58 28" aria-hidden="true">
+            <polygon points="-16,0 -32,-10 -29,0 -32,10" fill="#FF8A3D"/>
+            <ellipse cx="0" cy="0" rx="19" ry="11" fill="#FF9F43"/>
+            <path d="M-4,-10 C2,-17 10,-15 12,-9 Z" fill="#FF8A3D"/>
+            <circle cx="9" cy="-3" r="3" fill="#fff"/><circle cx="10" cy="-3" r="1.5" fill="#062029"/>
+            <path d="M17,2 q3,1 0,3" stroke="#7A2E0E" stroke-width="1.6" fill="none"/>
+          </svg></div>
+          <div class="ikan ikan2"><svg viewBox="-34 -14 58 28" aria-hidden="true">
+            <polygon points="-16,0 -32,-10 -29,0 -32,10" fill="#F2B62E"/>
+            <ellipse cx="0" cy="0" rx="19" ry="11" fill="#FFD45C"/>
+            <path d="M-4,-10 C2,-17 10,-15 12,-9 Z" fill="#F2B62E"/>
+            <circle cx="9" cy="-3" r="3" fill="#fff"/><circle cx="10" cy="-3" r="1.5" fill="#062029"/>
+            <path d="M17,2 q3,1 0,3" stroke="#7A4A0E" stroke-width="1.6" fill="none"/>
+          </svg></div>
+          <div class="ikan ikan3"><svg viewBox="-34 -14 58 28" aria-hidden="true">
+            <polygon points="-16,0 -32,-10 -29,0 -32,10" fill="#FF5C86"/>
+            <ellipse cx="0" cy="0" rx="19" ry="11" fill="#FF7A9C"/>
+            <path d="M-4,-10 C2,-17 10,-15 12,-9 Z" fill="#FF5C86"/>
+            <circle cx="9" cy="-3" r="3" fill="#fff"/><circle cx="10" cy="-3" r="1.5" fill="#062029"/>
+            <path d="M17,2 q3,1 0,3" stroke="#7A0E2E" stroke-width="1.6" fill="none"/>
+          </svg></div>
+        <span class="label-akuarium" id="labelAkuarium">Ikan sedang berenang</span>
+        <span class="nyam">Nyam nyam! 🐟</span>
+      </div>
+
+      <div class="kartu baris">
+        <div id="cincinLevel" class="cincin" style="--persen:0">
+          <span id="teksLevel">--%</span>
+        </div>
+        <div class="info">
+          <div class="label">Sisa pakan</div>
+          <div id="teksJarak" class="nilai-kecil">Jarak sensor: -- cm</div>
+          <div class="label mt">Status</div>
+          <div id="teksStatus" class="nilai">-</div>
+          <div class="label mt">Terakhir diberi pakan</div>
+          <div id="teksTerakhir" class="nilai">-</div>
+        </div>
+      </div>
+      <div class="info-mini">
+        <div><div class="label">Sinyal</div><div id="miniSinyal" class="nilai">-</div></div>
+        <div><div class="label">Alat aktif</div><div id="miniUptime" class="nilai">-</div></div>
+        <div><div class="label">Data terakhir</div><div id="miniUpdate" class="nilai">-</div></div>
+      </div>
+
+      <button id="btnPakan" class="tombol besar" style="margin-top:12px">BERI PAKAN SEKARANG</button>
+      <p id="pesanPakan" class="pesan-info"></p>
+      <div id="jadwalBerikut" class="jadwal-berikut tersembunyi">⏰ <span>Jadwal berikutnya <b id="teksJadwalBerikut">-</b></span></div>
+
+      <div class="baris-antara judul-bagian">
+        <h2>Jadwal Otomatis</h2>
+        <button id="btnTambahJadwal" class="tombol kecil utama">+ Tambah jadwal</button>
+      </div>
+      <div id="daftarJadwal"><div class="kartu redup">Memuat jadwal...</div></div>
+
+      <h2>Laporan Berkala</h2>
+      <div class="kartu">
+        <div id="teksLaporan">Belum ada laporan.</div>
+        <div id="waktuLaporan" class="redup kecil"></div>
+      </div>
+    </main>
+
+    <!-- ===================== RIWAYAT ===================== -->
+    <main id="tabRiwayat" class="isi-tab tersembunyi">
+      <div class="pilih-rentang">
+        <button class="rentang-btn aktif" data-jam="24">24 jam</button>
+        <button class="rentang-btn" data-jam="168">7 hari</button>
+        <button class="rentang-btn" data-jam="720">30 hari</button>
+      </div>
+
+      <h2>Pemberian Pakan</h2>
+      <div class="kartu">
+        <div class="ringkasan">
+          <div><div class="label">Total</div><div id="rkPakanTotal" class="angka">-</div></div>
+          <div><div class="label">Rata-rata per hari</div><div id="rkPakanRata" class="angka">-</div></div>
+        </div>
+        <div id="grafikPakan" class="grafik"></div>
+      </div>
+      <details class="kartu">
+        <summary><b>Daftar pemberian pakan</b></summary>
+        <ul id="daftarRiwayat" class="daftar polos"><li class="redup">Memuat...</li></ul>
+      </details>
+
+      <h2>Isi Wadah Pakan</h2>
+      <div class="kartu">
+        <div class="ringkasan">
+          <div><div class="label">Sekarang</div><div id="rkLevelSekarang" class="angka">-</div></div>
+          <div><div class="label">Terendah</div><div id="rkLevelMin" class="angka">-</div></div>
+          <div><div class="label">Tertinggi</div><div id="rkLevelMax" class="angka">-</div></div>
+        </div>
+        <div id="grafikLevel" class="grafik"></div>
+        <p class="redup kecil">Alat mencatat isi wadah setiap 10 menit.</p>
+      </div>
+      <details class="kartu">
+        <summary><b>Daftar isi wadah</b></summary>
+        <ul id="daftarLevel" class="daftar polos"><li class="redup">Memuat...</li></ul>
+      </details>
+
+      <h2>Kekuatan Sinyal WiFi</h2>
+      <div class="kartu">
+        <div id="grafikSinyal" class="grafik"></div>
+        <p class="redup kecil">Di atas -60 dBm kuat, -60 sampai -72 sedang, di bawah -72 lemah.</p>
+      </div>
+
+      <h2>Ekspor CSV</h2>
+      <div class="kartu">
+        <label class="f">Data yang diekspor
+          <select id="csvJenis">
+            <option value="semua">Semua informasi (satu file)</option>
+            <option value="pakan">Riwayat pemberian pakan</option>
+            <option value="level">Riwayat isi wadah dan sinyal</option>
+            <option value="jadwal">Jadwal</option>
+            <option value="alat">Status dan pengaturan alat</option>
+            <option value="pengguna" class="hanya-admin">Daftar pengguna</option>
+          </select>
+        </label>
+        <label class="f">Rentang waktu (untuk riwayat)
+          <select id="csvRentang">
+            <option value="24">24 jam terakhir</option>
+            <option value="168">7 hari terakhir</option>
+            <option value="720" selected>30 hari terakhir</option>
+            <option value="0">Semua data</option>
+          </select>
+        </label>
+        <button id="btnCsv" class="tombol utama" type="button" style="margin-top:14px">⬇ Unduh CSV</button>
+        <p id="pesanCsv" class="pesan-info kiri"></p>
+        <p class="redup kecil">Pemisah kolom titik koma (;) dan desimal koma, langsung rapi di Excel berbahasa Indonesia. Di Google Sheets, pilih pemisah titik koma saat impor. Password WiFi tidak ikut diekspor.</p>
+      </div>
+    </main>
+
+    <!-- ===================== PENGATURAN ===================== -->
+    <main id="tabPengaturan" class="isi-tab tersembunyi">
+
+      <div class="hanya-admin">
+        <!-- Katup pakan -->
+        <h2>Katup Pakan (banyaknya pakan)</h2>
+        <form id="formKatup" class="kartu">
+          <label class="f">Sudut katup terbuka: <b><span id="vSudutBuka">90</span>°</b>
+            <input id="inSudutBuka" type="range" min="0" max="180" step="1" value="90">
+          </label>
+          <label class="f">Sudut katup tertutup: <b><span id="vSudutTutup">0</span>°</b>
+            <input id="inSudutTutup" type="range" min="0" max="180" step="1" value="0">
+          </label>
+          <label class="f">Kecepatan gerak katup: <b><span id="vKecepatan">10</span></b> <span class="redup">(1 pelan, 10 langsung)</span>
+            <input id="inKecepatan" type="range" min="1" max="10" step="1" value="10">
+          </label>
+          <label class="f">Lama katup terbuka: <b><span id="vDurasi">1.0</span> detik</b>
+            <input id="inDurasi" type="range" min="0.1" max="10" step="0.1" value="1">
+          </label>
+          <p class="redup kecil">Semakin besar sudut dan semakin lama katup terbuka, semakin banyak pakan yang keluar.</p>
+          <div class="dua-tombol">
+            <button type="button" id="btnTesKatup" class="tombol">Tes beri pakan</button>
+            <button type="submit" class="tombol utama">Simpan</button>
+          </div>
+          <p id="pesanKatup" class="pesan-info kiri"></p>
+        </form>
+
+        <!-- Blower (relay) -->
+        <h2>Blower (Relay)</h2>
+        <form id="formBlower" class="kartu">
+          <label class="f">Lama blower menyala: <b><span id="vDurasiBlower">4.0</span> detik</b>
+            <input id="inDurasiBlower" type="range" min="1" max="60" step="0.5" value="4">
+          </label>
+          <p class="redup kecil">Dihitung sejak pakan mulai keluar. Blower tetap menyala sampai katup selesai menutup.</p>
+          <div class="label" style="margin-top:12px">Jenis relay</div>
+          <div class="hari pilihan-relay">
+            <label><input type="radio" name="jenisRelay" id="inRelayHigh" value="0" checked><span>Aktif HIGH</span></label>
+            <label><input type="radio" name="jenisRelay" id="inRelayLow" value="1"><span>Aktif LOW</span></label>
+            <label><input type="radio" name="jenisRelay" id="inRelayOd" value="2"><span>LOW modul 5V</span></label>
+          </div>
+          <p class="redup kecil">Jika blower malah menyala saat alat diam, atau tidak menyala saat memberi pakan, ganti pilihan ini lalu tekan Tes relay.
+            Jika relay <b>menyala terus</b> di Aktif HIGH maupun Aktif LOW, pilih <b>LOW modul 5V</b>: modul relay 5V aktif LOW sering tidak mau mati dengan sinyal 3,3V dari ESP32.</p>
+          <div class="dua-tombol">
+            <button type="button" id="btnTesRelay" class="tombol">Tes relay 3 detik</button>
+            <button type="submit" class="tombol utama">Simpan</button>
+          </div>
+          <p id="pesanBlower" class="pesan-info kiri"></p>
+        </form>
+
+        <!-- Servo pengarah -->
+        <h2>Servo Pengarah Pakan</h2>
+        <form id="formPengarah" class="kartu">
+          <label class="f">Batas kiri: <b><span id="vArahMin">45</span>°</b>
+            <input id="inArahMin" type="range" min="0" max="180" step="1" value="45">
+          </label>
+          <label class="f">Batas kanan: <b><span id="vArahMax">135</span>°</b>
+            <input id="inArahMax" type="range" min="0" max="180" step="1" value="135">
+          </label>
+          <label class="f">Kecepatan sapu: <b><span id="vArahKecepatan">7</span></b> <span class="redup">(1 pelan, 10 cepat)</span>
+            <input id="inArahKecepatan" type="range" min="1" max="10" step="1" value="7">
+          </label>
+          <p class="redup kecil">Ujung pipa bergerak bolak balik di antara batas kiri dan kanan selama blower menyala. Jika kedua batas sama, pengarah diam di sudut itu.</p>
+          <div class="dua-tombol">
+            <button type="button" id="btnTesPengarah" class="tombol">Tes beri pakan</button>
+            <button type="submit" class="tombol utama">Simpan</button>
+          </div>
+          <p id="pesanPengarah" class="pesan-info kiri"></p>
+        </form>
+
+        <!-- Kalibrasi -->
+        <h2>Kalibrasi Sensor Sisa Pakan</h2>
+        <form id="formKalibrasi" class="kartu">
+          <div class="baris-antara">
+            <div><div class="label">Jarak sensor sekarang</div><div id="kalJarakSekarang" class="angka">-- cm</div></div>
+            <div class="redup kecil kanan">Isi atau kosongkan wadah dulu,<br>lalu tekan "Pakai jarak sekarang".</div>
+          </div>
+          <label class="f">Titik PENUH (jarak saat wadah penuh, cm)
+            <div class="input-tombol">
+              <input id="inPenuh" type="number" step="0.1" min="0" required>
+              <button type="button" class="tombol kecil" data-isi="inPenuh">Pakai jarak sekarang</button>
+            </div>
+          </label>
+          <label class="f">Titik HABIS (jarak saat wadah kosong, cm)
+            <div class="input-tombol">
+              <input id="inHabis" type="number" step="0.1" min="0" required>
+              <button type="button" class="tombol kecil" data-isi="inHabis">Pakai jarak sekarang</button>
+            </div>
+          </label>
+          <button type="submit" class="tombol utama">Simpan kalibrasi</button>
+          <p id="pesanKalibrasi" class="pesan-info kiri"></p>
+        </form>
+
+        <!-- Reboot -->
+        <h2>Restart Otomatis</h2>
+        <form id="formReboot" class="kartu">
+          <div class="baris-antara">
+            <b>Restart terjadwal</b>
+            <label class="saklar"><input type="checkbox" id="inRbAktif"><span></span></label>
+          </div>
+          <input type="time" id="inRbWaktu" value="03:00">
+          <div class="hari" id="hariReboot"></div>
+          <button type="submit" class="tombol utama">Simpan</button>
+          <p id="pesanReboot" class="pesan-info kiri"></p>
+          <hr>
+          <button type="button" id="btnRebootSekarang" class="tombol merah">Restart alat sekarang</button>
+        </form>
+
+        <!-- Update firmware -->
+        <h2>Update Firmware (OTA)</h2>
+        <div class="kartu">
+          <div class="baris-antara">
+            <div><div class="label">Versi firmware alat</div><div id="teksFirmware" class="nilai">-</div></div>
+            <div class="kanan"><div class="label">Alamat alat</div><div id="teksIpAlat" class="nilai">-</div></div>
+          </div>
+          <div class="label" style="margin-top:12px">Cara kirim</div>
+          <div class="hari pilihan-ota">
+            <label><input type="radio" name="caraOta" id="inOtaInternet" value="internet" checked><span>Lewat internet</span></label>
+            <label><input type="radio" name="caraOta" id="inOtaLokal" value="lokal"><span>WiFi yang sama</span></label>
+          </div>
+          <ol class="langkah" id="langkahOtaInternet">
+            <li>Di laptop: Arduino IDE <b>Sketch &gt; Export Compiled Binary</b>, atau PlatformIO <b>Build</b>. Kirim file <b>.bin</b> ke HP.</li>
+            <li>Pilih file, tekan <b>Kirim ke alat</b>. File diunggah ke Firebase, lalu alat mengunduhnya sendiri lewat internet. <b>HP tidak perlu satu WiFi dengan alat.</b></li>
+            <li>Jika alat sedang offline, update berjalan otomatis saat alat online lagi (berlaku 24 jam).</li>
+          </ol>
+          <ol class="langkah" id="langkahOtaLokal" hidden>
+            <li>Di laptop: Arduino IDE <b>Sketch &gt; Export Compiled Binary</b>, atau PlatformIO <b>Build</b>. Kirim file <b>.bin</b> ke HP.</li>
+            <li>Pastikan <b>HP tersambung ke WiFi yang sama dengan alat</b>. Jika alat memakai hotspot HP ini, cukup nyalakan hotspotnya.</li>
+            <li>Pilih file, isi password OTA, tekan <b>Kirim ke alat</b>. Jangan tutup aplikasi sampai selesai.</li>
+          </ol>
+          <button id="btnPilihBin" class="tombol" type="button">Pilih file .bin</button>
+          <div id="teksBin" class="redup kecil" style="margin-top:6px">Belum ada file dipilih.</div>
+          <div id="isianOtaLokal" hidden>
+            <label class="f">Alamat IP alat
+              <input id="inIpOta" type="text" inputmode="decimal" autocomplete="off" placeholder="terisi otomatis dari alat">
+            </label>
+            <label class="f">Password OTA
+              <input id="inPassOta" type="password" autocomplete="off" placeholder="sama dengan OTA_PASSWORD di kode ESP32">
+            </label>
+          </div>
+          <button id="btnKirimOta" class="tombol utama" type="button" style="margin-top:14px">Kirim ke alat</button>
+          <div class="progres"><div id="barOta"></div></div>
+          <p id="pesanOta" class="pesan-info kiri"></p>
+        </div>
+
+        <!-- WiFi alat -->
+        <h2>WiFi Alat (ESP32)</h2>
+        <div class="kartu">
+          <div class="baris-antara">
+            <div>
+              <div class="label">Tersambung ke</div>
+              <div id="teksWifi" class="nilai">-</div>
+            </div>
+            <div id="teksSinyal" class="sinyal">-</div>
+          </div>
+          <div id="teksWifiPesan" class="pesan-info kiri"></div>
+          <hr>
+          <div class="baris-antara"><b>Daftar WiFi tersimpan</b><span id="jumlahWifi" class="redup kecil"></span></div>
+          <ul id="daftarWifi" class="daftar polos"><li class="redup">Memuat...</li></ul>
+          <p class="redup kecil">Alat otomatis memilih WiFi tersimpan dengan sinyal terkuat. Jika WiFi sekarang putus lebih dari 1 menit, alat mencari WiFi lain di daftar. Menambah atau menghapus WiFi <b>tidak</b> membuat alat pindah jaringan.</p>
+          <hr>
+          <b>Tambah WiFi</b>
+          <form id="formWifi">
+            <label class="f">Nama WiFi (SSID)
+              <input id="inWifiSsid" type="text" required autocomplete="off" maxlength="32">
+            </label>
+            <label class="f">Password WiFi
+              <input id="inWifiPass" type="password" autocomplete="new-password" maxlength="63" placeholder="kosongkan jika tanpa password">
+            </label>
+            <label class="centang"><input id="inLihatPass" type="checkbox"><span>Tampilkan password</span></label>
+            <button class="tombol utama" type="submit">+ Tambah WiFi</button>
+          </form>
+          <p class="redup kecil">Maksimal 8 WiFi. ESP32 hanya bisa WiFi 2,4 GHz.</p>
+        </div>
+
+        <details class="kartu">
+          <summary><b>Alat offline atau pindah tempat? Atur lewat hotspot</b></summary>
+          <ol class="langkah">
+            <li>Cabut daya ESP32. <b>Tahan tombol beri pakan</b>, colokkan daya, tahan 3 detik sampai LED berkedip cepat, lalu lepas.</li>
+            <li>Di HP, sambungkan WiFi ke <b>PakanIkan-Setup</b> (password <b>12345678</b>). Jika muncul "tidak ada internet", pilih tetap tersambung.</li>
+            <li>Halaman setup biasanya terbuka sendiri. Jika tidak, matikan data seluler lalu tekan tombol di bawah.</li>
+          </ol>
+          <a class="tombol kecil utama" href="http://192.168.4.1/">Buka halaman setup alat (192.168.4.1)</a>
+        </details>
+
+        <!-- Pengguna -->
+        <h2>Pengguna</h2>
+        <div class="kartu">
+          <ul id="daftarPengguna" class="daftar polos"><li class="redup">Memuat...</li></ul>
+        </div>
+        <div class="kartu">
+          <b>Tambah pengguna baru</b>
+          <form id="formTambah">
+            <label class="f">Nama
+              <input id="inNamaBaru" type="text" required placeholder="misal: Bapak">
+            </label>
+            <label class="f">Email
+              <input id="inEmailBaru" type="email" required autocomplete="off">
+            </label>
+            <label class="f">Password (minimal 6 karakter)
+              <input id="inPassBaru" type="text" required minlength="6" autocomplete="off">
+            </label>
+            <button class="tombol utama" type="submit">Tambah pengguna</button>
+            <p id="pesanTambah" class="pesan-info kiri"></p>
+          </form>
+        </div>
+      </div>
+
+      <h2>Akun Saya</h2>
+      <div class="kartu">
+        <div class="label">Masuk sebagai</div>
+        <div id="teksEmailSaya" class="nilai">-</div>
+        <hr>
+        <b>Ganti password</b>
+        <form id="formPassword">
+          <label class="f">Password lama
+            <input id="inPassLama" type="password" required autocomplete="current-password">
+          </label>
+          <label class="f">Password baru (minimal 6 karakter)
+            <input id="inPassBaruSaya" type="password" required minlength="6" autocomplete="new-password">
+          </label>
+          <button class="tombol utama" type="submit">Simpan password baru</button>
+          <p id="pesanPassword" class="pesan-info kiri"></p>
+        </form>
+        <hr>
+        <button id="btnKeluar" class="tombol merah">Keluar dari akun</button>
+      </div>
+      <p class="redup kecil tengah-teks">Aplikasi Pakan Ikan v3.6</p>
+    </main>
+  </section>
+
+  <template id="templateJadwal">
+    <div class="kartu jadwal">
+      <div class="baris-antara">
+        <strong class="judul-jadwal">Jadwal</strong>
+        <div class="baris-kecil">
+          <button class="tombol hapus jHapus" type="button">Hapus</button>
+          <label class="saklar">
+            <input type="checkbox" class="jAktif">
+            <span></span>
+          </label>
+        </div>
+      </div>
+      <input type="time" class="jWaktu" value="07:00">
+      <div class="hari"></div>
+      <div class="baris-antara">
+        <span class="jPesan redup kecil"></span>
+        <button class="tombol kecil utama jSimpan" type="button">Simpan</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

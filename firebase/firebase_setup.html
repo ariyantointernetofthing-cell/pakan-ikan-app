@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup Firebase Pakan Ikan</title>
+<style>
+  :root{--laut:#0B3B4F;--laut2:#12536D;--toska:#3FC1C9;--latar:#EEF6F8;--teks:#17303A;--redup:#5F7A85;--merah:#C8423B;--hijau:#1F9D61;--kuning:#FFF6D6}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--latar);color:var(--teks);line-height:1.55}
+  header{background:var(--laut);color:#fff;padding:28px 20px 34px}
+  header h1{margin:0 0 6px;font-size:24px}
+  header p{margin:0;opacity:.85;max-width:760px}
+  main{max-width:860px;margin:-18px auto 40px;padding:0 16px}
+  .kartu{background:#fff;border-radius:14px;padding:20px 22px;margin-bottom:16px;box-shadow:0 2px 10px rgba(11,59,79,.08)}
+  h2{margin:0 0 4px;font-size:18px;color:var(--laut);display:flex;align-items:center;gap:10px}
+  .no{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--toska);color:#fff;font-size:14px;align-items:center;justify-content:center;flex-shrink:0}
+  .sub{color:var(--redup);margin:0 0 12px;font-size:14px}
+  ol{padding-left:22px;margin:8px 0}
+  li{margin:5px 0}
+  b.ui{background:#E7F1F4;border-radius:5px;padding:1px 6px;font-weight:600;white-space:nowrap}
+  code{background:#E7F1F4;border-radius:5px;padding:1px 5px;font-size:13px}
+  a{color:var(--laut2)}
+  .catatan{background:var(--kuning);border-radius:10px;padding:10px 14px;font-size:14px;margin-top:10px}
+  .cek{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding-top:12px;border-top:1px solid #EEF3F5;font-size:14px;cursor:pointer}
+  .cek input{width:18px;height:18px;margin-top:2px;accent-color:var(--hijau)}
+  label.f{display:block;font-size:13px;color:var(--redup);margin:12px 0 4px}
+  input[type=text],input[type=email],input[type=password],textarea{width:100%;padding:10px 12px;border:1px solid #CFE0E5;border-radius:9px;font:inherit;font-size:14px;background:#FAFDFE;color:var(--teks)}
+  textarea{font-family:ui-monospace,Consolas,monospace;font-size:13px;min-height:190px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  @media(max-width:620px){.grid{grid-template-columns:1fr}}
+  button{border:0;border-radius:9px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;background:var(--laut);color:#fff}
+  button.salin{background:var(--toska);padding:7px 12px;font-size:13px}
+  .hasil{position:relative;margin-top:10px}
+  .hasil pre{background:#0F2730;color:#D7F3F5;border-radius:10px;padding:14px;overflow:auto;font-size:12.5px;margin:0;white-space:pre}
+  .hasil .salin{position:absolute;top:8px;right:8px}
+  .judulhasil{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+  .judulhasil strong{color:var(--laut)}
+  .tujuan{font-size:13px;color:var(--redup)}
+  .pesan{font-size:13px;margin-top:8px}
+  .err{color:var(--merah)} .ok{color:var(--hijau)}
+  .progres{height:8px;background:#DCEAEE;border-radius:99px;overflow:hidden;margin-top:14px}
+  .progres div{height:100%;background:var(--hijau);width:0;transition:.3s}
+  .progresTeks{font-size:12px;opacity:.85;margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Setup Firebase untuk Pakan Ikan Otomatis</h1>
+  <p>Ikuti langkah 1 sampai 6 sambil membuka Firebase Console di tab lain. Di langkah 7, tempel hasilnya dan halaman ini membuatkan isi <code style="color:#0B3B4F">config.js</code>, kode ESP32, dan Rules secara otomatis.</p>
+  <div class="progres"><div id="bar"></div></div>
+  <div class="progresTeks" id="barTeks">0 dari 6 langkah selesai</div>
+</header>
+
+<main>
+
+<div class="kartu">
+  <h2><span class="no">1</span>Buat proyek Firebase</h2>
+  <p class="sub">Wadah untuk database dan akun login.</p>
+  <ol>
+    <li>Buka <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</a>, login dengan akun Google.</li>
+    <li>Klik <b class="ui">Create a project</b> (atau <b class="ui">Get started with a Firebase project</b>).</li>
+    <li>Nama proyek: <code>pakan-ikan</code>. Centang persetujuan jika ada, klik <b class="ui">Continue</b>.</li>
+    <li>Jika ditawari Gemini atau AI assistance, boleh dimatikan. Klik <b class="ui">Continue</b>.</li>
+    <li>Matikan <b class="ui">Google Analytics</b>, lalu klik <b class="ui">Create project</b>. Tunggu sampai selesai, klik <b class="ui">Continue</b>.</li>
+  </ol>
+  <label class="cek"><input type="checkbox" class="langkah"> Proyek sudah jadi dan saya sudah ada di halaman Project Overview</label>
+</div>
+
+<div class="kartu">
+  <h2><span class="no">2</span>Buat Realtime Database</h2>
+  <p class="sub">Tempat ESP32 dan aplikasi bertukar data.</p>
+  <ol>
+    <li>Menu kiri: klik <b class="ui">Realtime Database</b> di bawah tulisan Project shortcuts. Jika tidak ada, buka <b class="ui">Databases &amp; Storage</b> lalu <b class="ui">Realtime Database</b>.</li>
+    <li>Klik <b class="ui">Create Database</b>.</li>
+    <li>Database location: pilih <b class="ui">Singapore (asia-southeast1)</b>. Klik <b class="ui">Next</b>.</li>
+    <li>Pilih <b class="ui">Start in locked mode</b>, klik <b class="ui">Enable</b>.</li>
+    <li>Di atas tabel data muncul alamat seperti <code>https://pakan-ikan-xxxxx-default-rtdb.asia-southeast1.firebasedatabase.app/</code>. Klik ikon salin di sebelahnya dan simpan, nanti ditempel di langkah 7.</li>
+  </ol>
+  <div class="catatan">Jika diminta upgrade ke paket Blaze (berbayar), batalkan. Realtime Database bisa dipakai gratis di paket Spark. Pastikan kamu memilih <b>Realtime Database</b>, bukan <b>Firestore Database</b>.</div>
+  <label class="cek"><input type="checkbox" class="langkah"> Database sudah dibuat dan alamatnya sudah saya salin</label>
+</div>
+
+<div class="kartu">
+  <h2><span class="no">3</span>Aktifkan login Email/Password</h2>
+  <ol>
+    <li>Menu kiri: buka <b class="ui">Security</b> lalu <b class="ui">Authentication</b>. Klik <b class="ui">Get started</b>.</li>
+    <li>Di tab <b class="ui">Sign-in method</b>, klik <b class="ui">Email/Password</b>.</li>
+    <li>Aktifkan saklar pertama (<b class="ui">Enable</b>). Saklar kedua (Email link) biarkan mati. Klik <b class="ui">Save</b>.</li>
+  </ol>
+  <label class="cek"><input type="checkbox" class="langkah"> Email/Password sudah berstatus Enabled</label>
+</div>
+
+<div class="kartu">
+  <h2><span class="no">4</span>Buat 2 akun</h2>
+  <p class="sub">Satu untuk alat ESP32, satu untuk kamu login di aplikasi HP.</p>
+  <ol>
+    <li>Masih di Authentication, buka tab <b class="ui">Users</b>, klik <b class="ui">Add user</b>.</li>
+    <li>Akun alat: email <code>esp32@pakanikan.id</code>, password buat sendiri (minimal 6 karakter). Klik <b class="ui">Add user</b>. Email ini tidak perlu email sungguhan.</li>
+    <li>Klik <b class="ui">Add user</b> lagi. Akun <b>admin</b> (kamu): email kamu sendiri (misalnya Gmail) dan password untuk login di aplikasi. Pengguna lain nanti ditambahkan langsung dari aplikasi, tidak perlu lewat sini.</li>
+  </ol>
+  <div class="catatan">Catat kedua password. Password akun alat akan masuk ke kode ESP32, password akunmu dipakai saat login di HP.</div>
+  <label class="cek"><input type="checkbox" class="langkah"> Dua akun sudah muncul di tab Users</label>
+</div>
+
+<div class="kartu">
+  <h2><span class="no">5</span>Daftarkan aplikasi Web dan salin konfigurasinya</h2>
+  <ol>
+    <li>Klik <b class="ui">Project Overview</b> di menu kiri, lalu klik tombol <b class="ui">+ Add app</b> di bawah nama proyek.</li>
+    <li>Pilih ikon <b class="ui">&lt;/&gt;</b> (Web).</li>
+    <li>App nickname: <code>Pakan Ikan App</code>. Jangan centang Firebase Hosting. Klik <b class="ui">Register app</b>.</li>
+    <li>Muncul kode berisi <code>const firebaseConfig = { ... };</code>. Blok dan salin <b>seluruh kode yang tampil</b>, lalu klik <b class="ui">Continue to console</b>.</li>
+  </ol>
+  <div class="catatan">Lupa menyalin? Buka lagi Project settings, gulir ke Your apps, pilih Pakan Ikan App, lalu pilih <b>Config</b> di bagian SDK setup and configuration.</div>
+  <label class="cek"><input type="checkbox" class="langkah"> Kode firebaseConfig sudah saya salin</label>
+</div>
+
+<div class="kartu">
+  <h2><span class="no">6</span>Biarkan pendaftaran akun tetap aktif</h2>
+  <p class="sub">Dibutuhkan supaya admin bisa menambah pengguna dari aplikasi.</p>
+  <ol>
+    <li>Authentication, tab <b class="ui">Settings</b>, pilih <b class="ui">User actions</b>.</li>
+    <li>Pastikan <b class="ui">Enable create (sign-up)</b> <b>tercentang</b>. Jika tadi sempat dimatikan, centang lagi lalu <b class="ui">Save</b>.</li>
+  </ol>
+  <div class="catatan">Tetap aman: orang yang membuat akun sendiri tidak bisa melihat atau mengubah data, karena Rules (langkah 7C) hanya mengizinkan admin, ESP32, dan pengguna yang ditambahkan admin.</div>
+  <label class="cek"><input type="checkbox" class="langkah"> Enable create (sign-up) tercentang</label>
+</div>
+
+<div class="kartu">
+  <h2><span class="no">7</span>Buat file otomatis</h2>
+  <p class="sub">Semua isian hanya diproses di halaman ini dan tidak disimpan atau dikirim ke mana pun.</p>
+
+  <label class="f">Tempel kode firebaseConfig dari langkah 5</label>
+  <textarea id="inConfig" placeholder='const firebaseConfig = {
+  apiKey: "AIza...",
+  authDomain: "pakan-ikan-xxxxx.firebaseapp.com",
+  databaseURL: "https://...firebasedatabase.app",
+  projectId: "pakan-ikan-xxxxx",
+  ...
+};'></textarea>
+
+  <label class="f">Alamat Realtime Database dari langkah 2 (wajib jika kode di atas tidak punya databaseURL)</label>
+  <input type="text" id="inDbUrl" placeholder="https://pakan-ikan-xxxxx-default-rtdb.asia-southeast1.firebasedatabase.app">
+
+  <div class="grid">
+    <div>
+      <label class="f">Email akun ESP32</label>
+      <input type="email" id="inEspEmail" value="esp32@pakanikan.id">
+    </div>
+    <div>
+      <label class="f">Password akun ESP32</label>
+      <input type="text" id="inEspPass" placeholder="password akun alat">
+    </div>
+    <div>
+      <label class="f">Email akun admin (kamu, untuk login di HP)</label>
+      <input type="email" id="inUserEmail" placeholder="kamu@gmail.com">
+    </div>
+    <div></div>
+    <div>
+      <label class="f">Nama WiFi (SSID)</label>
+      <input type="text" id="inSsid" value="">
+    </div>
+    <div>
+      <label class="f">Password WiFi</label>
+      <input type="text" id="inWifiPass" value="">
+    </div>
+  </div>
+
+  <p style="margin-top:16px"><button id="btnBuat">Buat file</button></p>
+  <div id="pesan" class="pesan"></div>
+
+  <div id="keluaran" style="display:none">
+    <div class="judulhasil"><strong>A. Isi file config.js</strong></div>
+    <div class="tujuan">Buka <code>2_aplikasi_android\app\src\main\assets\config.js</code> dengan Notepad, hapus semua isinya, tempel ini, simpan. Lalu jalankan UPLOAD_KE_GITHUB.bat.</div>
+    <div class="hasil"><pre id="outConfig"></pre><button class="salin" data-target="outConfig">Salin</button></div>
+
+    <div class="judulhasil"><strong>B. Bagian atas kode ESP32</strong></div>
+    <div class="tujuan">Tempel ke file <code>kredensial.h</code> (salinan dari <code>kredensial.contoh.h</code>) di folder <code>firmware/arduino/PakanIkanFirebase/</code>, ganti baris <code>#define</code> yang sama.</div>
+    <div class="hasil"><pre id="outEsp"></pre><button class="salin" data-target="outEsp">Salin</button></div>
+
+    <div class="judulhasil"><strong>C. Rules Realtime Database</strong></div>
+    <div class="tujuan">Firebase Console, buka Realtime Database, tab <b class="ui">Rules</b>. Hapus semua isinya, tempel ini, klik <b class="ui">Publish</b>.</div>
+    <div class="hasil"><pre id="outRules"></pre><button class="salin" data-target="outRules">Salin</button></div>
+
+    <div class="catatan" style="margin-top:16px"><b>Cek akhir:</b> setelah ESP32 di-upload dan menyala, buka Realtime Database tab <b>Data</b>. Jika muncul <code>pakanIkan</code> lalu <code>status</code> dengan angka yang berubah tiap 5 detik, Firebase sudah bekerja.</div>
+  </div>
+</div>
+
+</main>
+
+<script>
+(function(){
+  var langkah = document.querySelectorAll('.langkah');
+  function perbaruiProgres(){
+    var n = 0;
+    langkah.forEach(function(c){ if(c.checked) n++; });
+    document.getElementById('bar').style.width = (n / langkah.length * 100) + '%';
+    document.getElementById('barTeks').textContent = n + ' dari ' + langkah.length + ' langkah selesai';
+    try { localStorage.setItem('pakanIkanLangkah', JSON.stringify(Array.prototype.map.call(langkah, function(c){return c.checked;}))); } catch(e){}
+  }
+  try {
+    var simpan = JSON.parse(localStorage.getItem('pakanIkanLangkah') || '[]');
+    langkah.forEach(function(c, i){ c.checked = !!simpan[i]; });
+  } catch(e){}
+  langkah.forEach(function(c){ c.addEventListener('change', perbaruiProgres); });
+  perbaruiProgres();
+
+  function ambil(teks, kunci){
+    var re = new RegExp(kunci + '\\s*["\']?\\s*:\\s*["\']([^"\']+)["\']');
+    var m = teks.match(re);
+    return m ? m[1].trim() : '';
+  }
+  function esc(s){ return String(s).replace(/\\/g,'\\\\').replace(/"/g,'\\"'); }
+  function pesan(teks, jenis){
+    var el = document.getElementById('pesan');
+    el.innerHTML = teks; el.className = 'pesan ' + (jenis || '');
+  }
+
+  document.getElementById('btnBuat').addEventListener('click', function(){
+    var t = document.getElementById('inConfig').value;
+    var c = {
+      apiKey: ambil(t,'apiKey'),
+      authDomain: ambil(t,'authDomain'),
+      databaseURL: ambil(t,'databaseURL'),
+      projectId: ambil(t,'projectId'),
+      storageBucket: ambil(t,'storageBucket'),
+      messagingSenderId: ambil(t,'messagingSenderId'),
+      appId: ambil(t,'appId')
+    };
+    var dbManual = document.getElementById('inDbUrl').value.trim();
+    if (dbManual) c.databaseURL = dbManual;
+    c.databaseURL = c.databaseURL.replace(/\/+$/, '');
+
+    var espEmail = document.getElementById('inEspEmail').value.trim();
+    var espPass = document.getElementById('inEspPass').value;
+    var userEmail = document.getElementById('inUserEmail').value.trim();
+    var ssid = document.getElementById('inSsid').value;
+    var wifiPass = document.getElementById('inWifiPass').value;
+
+    var salah = [];
+    if (!/^AIza[0-9A-Za-z_\-]{20,}$/.test(c.apiKey)) salah.push('apiKey tidak ditemukan atau tidak valid. Pastikan seluruh kode firebaseConfig tertempel.');
+    if (!c.projectId) salah.push('projectId tidak ditemukan.');
+    if (!c.appId) salah.push('appId tidak ditemukan.');
+    if (!/^https:\/\/[a-z0-9\-]+(\.[a-z0-9\-]+)*\.(firebasedatabase\.app|firebaseio\.com)$/.test(c.databaseURL))
+      salah.push('Alamat database belum ada atau salah. Isi kolom alamat Realtime Database dari langkah 2 (harus berakhiran firebasedatabase.app atau firebaseio.com).');
+    if (!espEmail) salah.push('Email akun ESP32 kosong.');
+    if (espPass.length < 6) salah.push('Password akun ESP32 minimal 6 karakter, sama dengan yang dibuat di langkah 4.');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(userEmail)) salah.push('Email akun kamu belum diisi atau formatnya salah.');
+    if (!ssid) salah.push('Nama WiFi kosong.');
+    if (userEmail && espEmail && userEmail.toLowerCase() === espEmail.toLowerCase()) salah.push('Email akun kamu dan email ESP32 harus berbeda.');
+
+    if (salah.length){
+      document.getElementById('keluaran').style.display = 'none';
+      pesan('<b>Periksa lagi:</b><br>' + salah.map(function(s){return '&bull; ' + s;}).join('<br>'), 'err');
+      return;
+    }
+
+    if (!c.authDomain) c.authDomain = c.projectId + '.firebaseapp.com';
+
+    var cfg = '// Konfigurasi Firebase untuk aplikasi Pakan Ikan\n' +
+      'const firebaseConfig = {\n' +
+      '  apiKey: "' + esc(c.apiKey) + '",\n' +
+      '  authDomain: "' + esc(c.authDomain) + '",\n' +
+      '  databaseURL: "' + esc(c.databaseURL) + '",\n' +
+      '  projectId: "' + esc(c.projectId) + '",\n' +
+      (c.storageBucket ? '  storageBucket: "' + esc(c.storageBucket) + '",\n' : '') +
+      (c.messagingSenderId ? '  messagingSenderId: "' + esc(c.messagingSenderId) + '",\n' : '') +
+      '  appId: "' + esc(c.appId) + '"\n' +
+      '};\n\n' +
+      '// Email akun ADMIN (pemilik). Admin bisa menambah pengguna dan mengatur WiFi alat.\n' +
+      'const EMAIL_ADMIN = "' + esc(userEmail.toLowerCase()) + '";\n';
+
+    var esp = '#define WIFI_SSID      "' + esc(ssid) + '"\n' +
+      '#define WIFI_PASSWORD  "' + esc(wifiPass) + '"\n\n' +
+      '#define API_KEY        "' + esc(c.apiKey) + '"\n' +
+      '#define DATABASE_URL   "' + esc(c.databaseURL) + '"\n\n' +
+      '#define USER_EMAIL     "' + esc(espEmail) + '"\n' +
+      '#define USER_PASSWORD  "' + esc(espPass) + '"\n';
+
+    var esp1 = espEmail.toLowerCase().replace(/'/g,"");
+    var adm = userEmail.toLowerCase().replace(/'/g,"");
+    var semua = "auth != null && (auth.token.email == '" + esp1 + "' || auth.token.email == '" + adm + "' || root.child('pengguna').child(auth.uid).exists())";
+    var rules = JSON.stringify({
+      rules: {
+        ".read": false,
+        ".write": false,
+        pakanIkan: { ".read": semua, ".write": semua },
+        pengguna: {
+          ".read": "auth != null && (auth.token.email == '" + adm + "' || root.child('pengguna').child(auth.uid).exists())",
+          "$uid": {
+            ".write": "auth != null && auth.token.email == '" + adm + "'",
+            ".validate": "!newData.exists() || newData.hasChildren(['nama', 'email'])"
+          }
+        },
+        wifiAlat: {
+          ".read": "auth != null && (auth.token.email == '" + esp1 + "' || auth.token.email == '" + adm + "')",
+          ".write": "auth != null && auth.token.email == '" + adm + "'"
+        }
+      }
+    }, null, 2) + '\n';
+
+    document.getElementById('outConfig').textContent = cfg;
+    document.getElementById('outEsp').textContent = esp;
+    document.getElementById('outRules').textContent = rules;
+    document.getElementById('keluaran').style.display = 'block';
+    pesan('Berhasil. Salin ketiga hasil di bawah ke tempatnya masing-masing.', 'ok');
+  });
+
+  document.querySelectorAll('.salin').forEach(function(b){
+    b.addEventListener('click', function(){
+      var teks = document.getElementById(b.dataset.target).textContent;
+      var selesai = function(){ b.textContent = 'Tersalin'; setTimeout(function(){ b.textContent = 'Salin'; }, 1600); };
+      try {
+        navigator.clipboard.writeText(teks).then(selesai, function(){ pilihManual(b); });
+      } catch(e){ pilihManual(b); }
+    });
+  });
+  function pilihManual(b){
+    var pre = document.getElementById(b.dataset.target);
+    var r = document.createRange(); r.selectNodeContents(pre);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    b.textContent = 'Tekan Ctrl+C';
+  }
+})();
+</script>
+</body>
+</html>
