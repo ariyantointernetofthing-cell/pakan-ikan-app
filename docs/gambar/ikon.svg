@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="latar" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2BC4C9"/><stop offset=".55" stop-color="#127A91"/><stop offset="1" stop-color="#0B3B4F"/>
+    </linearGradient>
+    <linearGradient id="badan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFB867"/><stop offset="1" stop-color="#FF7A2F"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#latar)"/>
+  <g id="isi">
+    <path d="M40,388 C120,360 190,410 270,384 C350,358 420,404 472,380 L472,430 C420,452 350,410 270,436 C190,462 120,412 40,440 Z" fill="#fff" opacity=".13"/>
+    <circle cx="118" cy="168" r="14" fill="none" stroke="#fff" stroke-width="5" opacity=".55"/>
+    <circle cx="96" cy="222" r="9" fill="none" stroke="#fff" stroke-width="4" opacity=".45"/>
+    <circle cx="352" cy="104" r="13" fill="#FFD45C"/>
+    <circle cx="392" cy="150" r="10" fill="#FFD45C"/>
+    <circle cx="330" cy="160" r="8" fill="#FFD45C" opacity=".85"/>
+    <g transform="translate(262,282) rotate(-14)">
+      <path d="M-100,0 L-168,-62 C-160,-20 -160,20 -168,62 Z" fill="#FF6A1F"/>
+      <ellipse cx="0" cy="0" rx="118" ry="80" fill="url(#badan)"/>
+      <path d="M-30,-74 C0,-128 50,-120 64,-66 Z" fill="#FF6A1F"/>
+      <path d="M-20,30 C10,58 50,52 62,30" stroke="#FF6A1F" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <circle cx="58" cy="-18" r="20" fill="#fff"/><circle cx="64" cy="-18" r="10" fill="#062029"/>
+      <circle cx="68" cy="-23" r="3.5" fill="#fff"/>
+      <ellipse cx="112" cy="12" rx="10" ry="12" fill="#7A2E0E"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.pakanikan.app'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.pakanikan.app'
+        minSdk 24
+        targetSdk 34
+        versionCode 8
+        versionName '3.8'
+    }
+
+    // Kunci tanda tangan tetap, supaya APK versi baru bisa langsung
+    // di-install menimpa versi lama tanpa perlu uninstall.
+    signingConfigs {
+        kunci {
+            storeFile file('kunci-aplikasi.keystore')
+            storePassword 'pakanikan123'
+            keyAlias 'pakanikan'
+            keyPassword 'pakanikan123'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.kunci
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.kunci
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.11.0'
+}

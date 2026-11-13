@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "author": "Pakan Ikan Otomatis",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic1", "top": -170, "left": -200, "attrs": { "distance": "12" } },
+    { "type": "wokwi-servo", "id": "servoPakan", "top": -160, "left": 230, "attrs": {} },
+    { "type": "wokwi-servo", "id": "servoArah", "top": -20, "left": 290, "attrs": {} },
+    { "type": "wokwi-relay-module", "id": "relayBlower", "top": 150, "left": 260, "attrs": {} },
+    { "type": "wokwi-led", "id": "ledBlower", "top": 120, "left": 450, "attrs": { "color": "blue", "label": "Blower" } },
+    { "type": "wokwi-led", "id": "ledWifi", "top": 230, "left": -170, "attrs": { "color": "green", "label": "LED" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": 290, "left": -120, "rotate": 90, "attrs": { "value": "220" } },
+    { "type": "wokwi-buzzer", "id": "buzzer1", "top": 210, "left": -300, "attrs": { "volume": "0.1" } },
+    { "type": "wokwi-pushbutton", "id": "btn1", "top": 80, "left": -260, "attrs": { "color": "green", "label": "Beri Pakan" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+
+    [ "ultrasonic1:VCC", "esp:5V", "red", [] ],
+    [ "ultrasonic1:GND", "esp:GND.1", "black", [] ],
+    [ "ultrasonic1:TRIG", "esp:5", "orange", [] ],
+    [ "ultrasonic1:ECHO", "esp:18", "purple", [] ],
+
+    [ "servoPakan:V+", "esp:5V", "red", [] ],
+    [ "servoPakan:GND", "esp:GND.2", "black", [] ],
+    [ "servoPakan:PWM", "esp:19", "orange", [] ],
+
+    [ "servoArah:V+", "esp:5V", "red", [] ],
+    [ "servoArah:GND", "esp:GND.2", "black", [] ],
+    [ "servoArah:PWM", "esp:4", "gold", [] ],
+
+    [ "relayBlower:VCC", "esp:5V", "red", [] ],
+    [ "relayBlower:GND", "esp:GND.3", "black", [] ],
+    [ "relayBlower:IN", "esp:25", "green", [] ],
+    [ "relayBlower:COM", "esp:3V3", "red", [] ],
+    [ "relayBlower:NO", "ledBlower:A", "blue", [] ],
+    [ "ledBlower:C", "esp:GND.3", "black", [] ],
+
+    [ "ledWifi:A", "esp:26", "green", [] ],
+    [ "ledWifi:C", "r1:1", "black", [] ],
+    [ "r1:2", "esp:GND.1", "black", [] ],
+
+    [ "buzzer1:2", "esp:27", "red", [] ],
+    [ "buzzer1:1", "esp:GND.1", "black", [] ],
+
+    [ "btn1:1.l", "esp:23", "green", [] ],
+    [ "btn1:2.l", "esp:GND.1", "black", [] ]
+  ],
+  "dependencies": {}
+}
