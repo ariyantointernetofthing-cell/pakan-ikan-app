@@ -1,0 +1,21 @@
+# ===== RAHASIA: jangan pernah diupload =====
+kredensial.h
+pribadi/
+
+# ===== hasil build =====
+.pio/
+build/
+.gradle/
+*.apk
+*.bin
+*.elf
+*.map
+local.properties
+.idea/
+*.iml
+
+# ===== lain-lain =====
+*.bat
+.vscode/
+.DS_Store
+Thumbs.db

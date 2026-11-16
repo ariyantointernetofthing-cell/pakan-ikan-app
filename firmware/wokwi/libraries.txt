@@ -1,0 +1,3 @@
+# Library untuk proyek Pakan Ikan di Wokwi
+ESP32Servo
+Firebase Arduino Client Library for ESP8266 and ESP32
