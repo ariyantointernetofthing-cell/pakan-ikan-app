@@ -1,0 +1,45 @@
+# Versi web aplikasi Pakan Ikan di GitHub Pages.
+# Berjalan setiap kali proyek diupload ke branch main.
+# Sekali saja: Settings > Pages > Build and deployment > Source: GitHub Actions.
+name: Web Pakan Ikan
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Siapkan halaman web dari aset aplikasi
+        run: |
+          mkdir -p _site
+          cp -r aplikasi/app/src/main/assets/* _site/
+          cp web/manifest.webmanifest _site/
+          cp docs/gambar/ikon-512.png _site/ikon-512.png
+          cp aplikasi/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png _site/ikon-192.png
+          sed -i 's#<link rel="stylesheet" href="style.css">#<link rel="stylesheet" href="style.css">\n  <link rel="manifest" href="manifest.webmanifest">\n  <link rel="icon" type="image/png" href="ikon-192.png">\n  <link rel="apple-touch-icon" href="ikon-192.png">#' _site/index.html
+          touch _site/.nojekyll
+          ls -la _site
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
